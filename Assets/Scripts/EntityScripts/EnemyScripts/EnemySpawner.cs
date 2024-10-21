@@ -37,7 +37,14 @@ public class EnemySpawner : MonoBehaviour
 
         var _enemy = Instantiate(GameManager.Instance.EnemyPrefabsCollection[_rndEnemyPrefab].EnemyPrefab, _enemySpawnPosition.position, Quaternion.identity);
         _enemy.InitializeEntity(GameManager.Instance.EnemyPrefabsCollection[_rndEnemyPrefab]);
+        _enemy.OnEntityDestroy += RemoveEntityFromList;
 
         _createdEnemies.Add(_enemy);
+    }
+
+    private void RemoveEntityFromList(EntityController entity)
+    {
+        entity.OnEntityDestroy -= RemoveEntityFromList;
+        _createdEnemies.Remove(entity);
     }
 }

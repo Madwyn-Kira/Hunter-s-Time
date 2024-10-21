@@ -2,6 +2,8 @@ using System;
 
 public interface IHealth
 {
+    public bool IsDead { get; }
+
     float CurrentHealth { get; }
     float MaxHealth { get; }
 

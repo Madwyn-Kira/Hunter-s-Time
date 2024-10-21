@@ -10,6 +10,7 @@ public class PlatformController : MonoBehaviour
 
     public PlatformScriptableObject PlatformScriptableObject { get { return _platformScriptableObject; } }
     public Transform EnemySpawnPosition { get { return _enemySpawnPosition; } }
+    public EnemySpawner EnemySpawner { get { return _enemySpawner; } }
 
     private EnemySpawner _enemySpawner;
 

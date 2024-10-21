@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammunitionName: Arrow
   speed: 1
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 5371222282794004092, guid: a0f080ddc718dec4c9c9ae0a34e14602, type: 3}

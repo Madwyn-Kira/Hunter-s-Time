@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,6 +12,9 @@ public abstract class EntityController : MonoBehaviour
 
     public NavMeshAgent NavAgent { get { return _navMeshAgent; } }
     public Animator EntityAnimator { get { return _entityAnimator; } }
+    public abstract WeaponController WeaponController { get; }
+
+    public event Action<EntityController> OnEntityDestroy;
 
     protected HealthController _healthController;
     protected StateMachine _currentState;
@@ -29,5 +33,16 @@ public abstract class EntityController : MonoBehaviour
 
         _currentState = _state;
         _currentState.EnterState(this);
+    }
+
+    public void DisactivateEntity()
+    {
+        _navMeshAgent.isStopped = true;
+    }
+
+    public void DestroyEntity()
+    {
+        OnEntityDestroy?.Invoke(this);
+        Destroy(gameObject);
     }
 }

@@ -7,11 +7,15 @@ public class HealthController : MonoBehaviour, IHealth
     [SerializeField] private HPBar healthBar;
     [SerializeField] private float maxHealth = 100f;
 
+    public bool IsDead { get { return _isEntityDead; } }
+
     public float CurrentHealth { get; private set; }
     public float MaxHealth { get { return maxHealth; } }
 
     public event Action<float> OnHealthChanged;
     public event Action OnDeath;
+
+    private bool _isEntityDead = false;
 
     public void Initialize(Slider hpBar, float _maxHealth)
     {
@@ -45,6 +49,7 @@ public class HealthController : MonoBehaviour, IHealth
 
     private void Die()
     {
+        _isEntityDead = true;
         OnDeath?.Invoke();
     }
 }

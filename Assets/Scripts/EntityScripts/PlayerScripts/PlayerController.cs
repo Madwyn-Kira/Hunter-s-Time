@@ -1,5 +1,12 @@
+using UnityEngine;
+
 public class PlayerController : EntityController
 {
+    [SerializeField]
+    private WeaponController PlayersWeapon;
+
+    public override WeaponController WeaponController { get { return PlayersWeapon; } }
+
     private PlayerScriptableObject _playerScriptableObject;
 
     public override void InitializeEntity<T>(T playerSettings)
@@ -13,6 +20,8 @@ public class PlayerController : EntityController
         base._healthController.OnDeath += Die;
 
         ChangeState(new PlayerIdleState());
+
+        PlayersWeapon.Initialize();
     }
 
     private void Update()
@@ -31,8 +40,12 @@ public class PlayerController : EntityController
     private void Die()
     {
         ChangeState(new PlayerDieState());
+    }
 
+    public void DestroyPlayer()
+    {
         GameManager.Instance.EndGame();
+        Destroy(gameObject);
     }
 
     private void OnDestroy()

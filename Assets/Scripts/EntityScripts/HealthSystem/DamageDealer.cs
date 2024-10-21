@@ -1,15 +1,60 @@
+using DG.Tweening;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class DamageDealer : MonoBehaviour
 {
-    [SerializeField] private float damageAmount = 10f;
+    [HideInInspector] public bool IsBulletFree = false;
+    private float _damageAmount = 10f;
+    private GameObject _target;
+    private AmmunitionData _ammunitionData;
 
-    private void OnTriggerEnter(Collider other)
+    public void ReInitializeBullet(GameObject target, AmmunitionData ammunitionData, float damageAmount)
     {
-        IHealth health = other.GetComponent<IHealth>();
-        if (health != null)
+        _ammunitionData = ammunitionData;
+        _target = target;
+        _damageAmount = damageAmount;
+
+        gameObject.SetActive(true);
+        IsBulletFree = false;
+
+        _target.GetComponent<EntityController>().OnEntityDestroy += TargetIsDie;
+
+        RunBullet();
+    }
+
+    private void RunBullet()
+    {
+        if (_target != null)
         {
-            health.TakeDamage(damageAmount);
+            transform.LookAt(_target.transform.position);
+
+            transform.DOMove(_target.transform.position, _ammunitionData.speed)
+                .SetEase(Ease.Linear)
+                .OnComplete(() => EndBulletRun())
+                .SetAutoKill(true);
         }
+    }
+
+    private void EndBulletRun()
+    {
+        var _targetHealth = _target.GetComponent<IHealth>();
+
+        _targetHealth.TakeDamage(_damageAmount);
+        DisactivateBullet();
+    }
+
+    private void DisactivateBullet()
+    {
+        DOTween.Kill(transform);
+
+        IsBulletFree = true;
+        gameObject.SetActive(false);
+    }
+
+    private void TargetIsDie(EntityController entity)
+    {
+        DisactivateBullet();
+        entity.OnEntityDestroy -= TargetIsDie;
     }
 }

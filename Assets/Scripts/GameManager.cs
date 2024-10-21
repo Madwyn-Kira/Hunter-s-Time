@@ -24,11 +24,21 @@ public class GameManager : MonoBehaviour
     [Header("Another")]
 
     [SerializeField]
+    private GameObject EndGamePanel;
+
+    [Space(5)]
+    [Header("Another")]
+
+    [SerializeField]
     private Joystick _joystick;
+
+    [SerializeField]
+    private List<PlatformController> _platforms = new();
 
     public Joystick Joystick { get { return _joystick; } }
     public PlayerController CurrentPlayer { get { return _currentPlayer; } }
     public List<EnemyScriptableObject> EnemyPrefabsCollection { get { return _enemiesPrefabs; } }
+    public List<PlatformController> Platforms { get { return _platforms; } }
 
     private PlayerController _currentPlayer;
 
@@ -56,6 +66,6 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-
+        EndGamePanel.SetActive(true);
     }
 }

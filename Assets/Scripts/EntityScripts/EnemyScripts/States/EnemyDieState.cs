@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class EnemyDieState : StateMachine
 {
     private EntityController _controller;
@@ -5,6 +7,8 @@ public class EnemyDieState : StateMachine
     public override void EnterState<T>(T controler)
     {
         _controller = controler as EntityController;
+
+        _controller.DisactivateEntity();
         _controller.EntityAnimator?.SetInteger("State", 3);
     }
 

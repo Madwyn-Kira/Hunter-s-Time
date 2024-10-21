@@ -1,6 +1,13 @@
+using UnityEngine;
+
 public class EnemyController : EntityController
 {
+    [SerializeField]
+    private WeaponController EnemyWeapon;
+
     private EnemyScriptableObject _enemySettings;
+
+    public override WeaponController WeaponController { get { return EnemyWeapon; } }
 
     public override void InitializeEntity<T>(T enemySettings)
     {
@@ -11,6 +18,8 @@ public class EnemyController : EntityController
         base._healthController.Initialize(null, _enemySettings.MaxHealth);
         base._healthController.OnHealthChanged += ChangeHealth;
         base._healthController.OnDeath += Die;
+
+        EnemyWeapon.Initialize();
 
         ChangeState(new EnemyIdleState());
     }
@@ -30,7 +39,7 @@ public class EnemyController : EntityController
 
     private void Die()
     {
-
+        ChangeState(new EnemyDieState());
     }
 
     private void OnDestroy()

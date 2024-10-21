@@ -5,7 +5,7 @@ public class PlayerDieState : StateMachine
     public override void EnterState<T>(T controler)
     {
         _controller = controler as EntityController;
-        _controller.EntityAnimator?.SetInteger("State", 0);
+        _controller.EntityAnimator?.SetInteger("State", 4);
     }
 
     public override void ExitState()
