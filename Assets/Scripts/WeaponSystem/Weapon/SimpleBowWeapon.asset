@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SimpleBowWeapon
   m_EditorClassIdentifier: 
   weaponName: Bow
-  damage: 10
+  damage: 50
   fireRate: 1.2
-  range: 200
+  range: 100
   reloadTime: 0
   ammunition: {fileID: 11400000, guid: bf55bba7ea3614c41bbb6ed7f41cad5b, type: 2}
